@@ -1,0 +1,26 @@
+.transcript-block {
+    padding: 8px 0;
+    transition: background-color 0.3s;
+  }
+  
+  .transcript-block span {
+    display: inline-block;;
+    transition: background-color 0.3s;
+    cursor: pointer;
+  }
+  
+  .transcript-block span.active {
+    background-color: #FEF08A;
+  }
+  
+  .transcript-block span:hover {
+    background-color: rgba(229, 238, 255, 1);
+  }
+  
+  @media (max-width: 1024px) {
+    .transcript-block {
+      width: auto;
+      height: auto;
+    }
+  }
+  

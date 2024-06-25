@@ -1,0 +1,26 @@
+.audio-player-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(241, 243, 244, 1);   
+    box-shadow: 0px -7px 8px -3px rgba(0, 0, 0, 0.1);
+    padding: 15px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  audio {
+    min-width: 97%;
+    background: rgba(241, 243, 244, 1);
+    border-radius: 200px;
+    box-shadow: 0 0px 10px rgba(144, 144, 144, 0.1);
+
+  }
+  @media (max-width: 600px) {
+    .audio-player-container {
+      padding: 5px;
+    }
+  }
+  
