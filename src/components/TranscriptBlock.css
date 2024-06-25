@@ -1,11 +1,6 @@
-.transcript-block {
-    padding: 8px 0;
-    transition: background-color 0.3s;
-  }
-  
-  .transcript-block span {
-    display: inline-block;;
-    transition: background-color 0.3s;
+  .transcript-block {
+    padding: 8px 0px;
+    transition: background-color 0.39s;
     cursor: pointer;
   }
   

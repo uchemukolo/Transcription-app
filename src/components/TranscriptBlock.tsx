@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import './TranscriptBlock.css';
 
 interface TranscriptBlockProps {
@@ -6,27 +6,22 @@ interface TranscriptBlockProps {
   isActive: boolean;
   start: number;
   onClick: () => void;
-  onHoverStart: () => void;
-  onHoverEnd: () => void;
 }
 
-const TranscriptBlock: React.FC<TranscriptBlockProps> = ({
+const TranscriptBlock = forwardRef<HTMLDivElement, TranscriptBlockProps>(({
   text,
   isActive,
   onClick,
-  onHoverStart,
-  onHoverEnd,
-}) => {
+}, ref) => {
   return (
     <div
       className="transcript-block"
       onClick={onClick}
-      onMouseEnter={onHoverStart}
-      onMouseLeave={onHoverEnd}
+      ref={ref} // Forward the ref to this div
     >
       <span className={isActive ? 'active' : ''}>{text}</span>
     </div>
   );
-};
+});
 
 export default React.memo(TranscriptBlock);

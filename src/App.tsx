@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchTranscript } from './services/api';
 import AudioPlayer from './components/AudioPlayer';
@@ -24,6 +24,7 @@ const App: React.FC = () => {
   const [activeBlockIndex, setActiveBlockIndex] = useState<number>(-1);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [startTime, setStartTime] = useState<number | undefined>(undefined);
+  const blockRefs = useRef<(HTMLDivElement | null)[]>([]); // Refs for each transcript block
 
   // Fetch the transcript data when the component mounts or id changes
   useEffect(() => {
@@ -51,6 +52,13 @@ const App: React.FC = () => {
     }
   }, [currentTime, transcript]);
 
+  // Scroll the active block into view if audio is playing
+  useEffect(() => {
+    if (isPlaying && activeBlockIndex !== -1 && blockRefs.current[activeBlockIndex]) {
+      blockRefs.current[activeBlockIndex]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [activeBlockIndex, isPlaying]);
+
   // Memoize the handleTimeUpdate function to prevent unnecessary re-renders
   const handleTimeUpdate = useCallback((time: number) => {
     setCurrentTime(time);
@@ -70,11 +78,10 @@ const App: React.FC = () => {
         start={block.start}
         isActive={isPlaying && index === activeBlockIndex}
         onClick={() => handleBlockClick(block.start)}
-        onHoverStart={() => setCurrentTime(block.start)}
-        onHoverEnd={() => setCurrentTime(currentTime)}
+        ref={(el) => (blockRefs.current[index] = el)} // Set the ref for each block
       />
     ));
-  }, [transcript, isPlaying, activeBlockIndex, handleBlockClick, currentTime]);
+  }, [transcript, isPlaying, activeBlockIndex, handleBlockClick]);
 
   if (error) {
     return <div>{error}</div>;
